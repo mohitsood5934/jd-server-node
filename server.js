@@ -6,6 +6,7 @@ import colors from "colors";
 
 import connectDB from "./db.js";
 import authRoutes from "./routes/authRoutes.js";
+import logger from "./middlewares/logger.js"; // 
 
 const app = express();
 dotenv.config();
@@ -17,6 +18,7 @@ connectDB();
 app.use(cors());
 
 app.use(bodyParser.json());
+app.use(logger);
 
 app.use("/api/auth", authRoutes);
 
