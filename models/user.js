@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
-import bcrypt from 'bcryptjs';
+import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
 
 const userSchema = new mongoose.Schema(
   {
@@ -8,16 +8,17 @@ const userSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    employeeCode: {
+      type: Number,
+      required: true,
+      unique: true,
+      trim: true,
+    },
     email: {
       type: String,
       required: true,
       unique: true,
       trim: true,
-    },
-    mobile: {
-      type: Number,
-      required: true,
-      unique: true,
     },
     password: {
       type: String,
@@ -25,8 +26,8 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ['admin', 'user'],
-      default: 'user',
+      enum: ["employee", "hr"],
+      default: "employee",
     },
     refreshToken: { type: String },
   },
@@ -34,8 +35,8 @@ const userSchema = new mongoose.Schema(
 );
 
 // Password hashing middleware
-userSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) return next();
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
 
   try {
     const salt = await bcrypt.genSalt(10);
@@ -51,10 +52,10 @@ userSchema.methods.isValidPassword = async function (password) {
   try {
     return await bcrypt.compare(password, this.password);
   } catch (error) {
-    throw new Error('Password comparison failed');
+    throw new Error("Password comparison failed");
   }
 };
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model("User", userSchema);
 
 export default User;
