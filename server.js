@@ -7,6 +7,7 @@ import colors from "colors";
 
 import connectDB from "./db.js";
 import authRoutes from "./routes/authRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
 import logger from "./middlewares/logger.js"; // 
 
 const app = express();
@@ -44,6 +45,7 @@ app.use(bodyParser.json());
 app.use(logger);
 
 app.use("/api/auth", authRoutes);
+app.use("/api/user", userRoutes);
 
 app.listen(process.env.PORT, () => {
   console.log(colors.yellow(`You are listening to port - ${process.env.PORT}`));
