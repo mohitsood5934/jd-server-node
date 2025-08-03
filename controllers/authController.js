@@ -29,7 +29,7 @@ export const signup = async (req, res) => {
   }
 
   try {
-    // Check if the email or mobile already exists
+    // Check if the email already exists
     const existingUser = await User.findOne({
       $or: [{ email }, { employeeCode }],
     });
@@ -46,7 +46,7 @@ export const signup = async (req, res) => {
 
     res.status(201).json({ msg: "User created successfully", user: newUser });
   } catch (error) {
-    console.error("Error signing up user:", error);
+    console.error("Error signing up user:", error, error.message, "message");
     res.status(500).json({ msg: "Server error during signup" });
   }
 };
